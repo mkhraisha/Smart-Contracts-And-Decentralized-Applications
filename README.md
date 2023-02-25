@@ -1,13 +1,9 @@
-## Smart-Contracts-And-Decentralized-Applications
+# Smart-Contracts-And-Decentralized-Applications
 
-[Course website](https://york-blockchain.github.io/Smart-Contracts-And-Decentralized-Applications/)
+[Course Website](https://mkhraisha.github.io/Smart-Contracts-And-Decentralized-Applications/)
 
-If you want to view these slides on your own computer, clone the repository, switch into the directory, and update the submodules:
+This repository is based on the work of Dhruvin Parikh, forked from: [2022 Course Repo](https://github.com/york-blockchain/Smart-Contracts-And-Decentralized-Applications)
 
-    git clone https://github.com/york-blockchain/Smart-Contracts-And-Decentralized-Applications.git
-    cd Smart-Contracts-And-Decentralized-Applications
-    git submodule update --init
+This repository contains assignments and the final project for this course. You will have access to all the assignments when the course starts. While you may begin working on your assignments at any time you wish, the assignments are intended to reinforce learning from the preceding Module.
 
-### TODO
-
-- [ ] Add assignments to course website
+The final project is intended to tie all the lessons of the course together and create a functional end to end application.

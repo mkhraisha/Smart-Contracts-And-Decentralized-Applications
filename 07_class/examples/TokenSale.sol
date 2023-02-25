@@ -4,7 +4,7 @@
 
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 interface IERC20Token {
     function balanceOf(address owner) external returns (uint256);

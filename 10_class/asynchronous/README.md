@@ -1,9 +1,11 @@
 # Coding Activity
+
 In this activity, lifecycle using OpenZeppelin Truffle Upgrades and Gnosis Safe from creating, testing and deploying, all the way through to upgrading with Gnosis Safe is shown
 
 - Smart contracts deployed with the OpenZeppelin Upgrades plugins can be upgraded to modify their code, while preserving their address, state, and balance. This allows you to iteratively add new features to your project, or fix any bugs you may find in production.
 
 ## Create an upgradeable contract
+
 - Test the contract locally
 - Deploy the contract to a public network
 - Transfer control of upgrades to a Gnosis Safe
@@ -19,12 +21,14 @@ Let us create a new npm project
 mkdir mycontract && cd mycontract
 npm init -y
 ```
+
 Install and initialize Truffle. Note: Use Truffle version 5.1.35 or greater.
 
 ```bash
 npm i --save-dev truffle
 npx truffle init
 ```
+
 Install the Truffle Upgrades plugin.
 
 ```
@@ -35,7 +39,7 @@ npm i --save-dev @openzeppelin/truffle-upgrades
 
 - Create `Box.sol` in your contracts directory with the following Solidity code.
 
->Note, upgradeable contracts use initialize functions rather than constructors to initialize state. To keep things simple we will initialize our state using the public store function that can be called multiple times from any account rather than a protected single use initialize function.
+> Note, upgradeable contracts use initialize functions rather than constructors to initialize state. To keep things simple we will initialize our state using the public store function that can be called multiple times from any account rather than a protected single use initialize function.
 
 ```bash
 Box.sol
@@ -45,19 +49,19 @@ Box.sol
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.0;
- 
+
 contract Box {
     uint256 private value;
- 
+
     // Emitted when the stored value changes
     event ValueChanged(uint256 newValue);
- 
+
     // Stores a new value in the contract
     function store(uint256 newValue) public {
         value = newValue;
         emit ValueChanged(newValue);
     }
- 
+
     // Reads the last stored value
     function retrieve() public view returns (uint256) {
         return value;
@@ -78,35 +82,37 @@ npm i --save-dev chai
 - We will create unit tests for the implementation contract. Create `Box.test.js` in your test directory with the following JavaScript.
 
 `Box.test.js`
+
 ```js
 // test/Box.test.js
 // Load dependencies
-const { expect } = require('chai');
- 
+const { expect } = require("chai");
+
 // Load compiled artifacts
-const Box = artifacts.require('Box');
- 
+const Box = artifacts.require("Box");
+
 // Start test block
-contract('Box', function () {
+contract("Box", function () {
   beforeEach(async function () {
     // Deploy a new Box contract for each test
     this.box = await Box.new();
   });
- 
+
   // Test case
-  it('retrieve returns a value previously stored', async function () {
+  it("retrieve returns a value previously stored", async function () {
     // Store a value
     await this.box.store(42);
- 
+
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
-    expect((await this.box.retrieve()).toString()).to.equal('42');
+    expect((await this.box.retrieve()).toString()).to.equal("42");
   });
 });
 ```
 
 - We can also create tests for interacting via the proxy.
->Note: We don’t need to duplicate our unit tests here, this is for testing proxy interaction and testing upgrades.
+
+  > Note: We don’t need to duplicate our unit tests here, this is for testing proxy interaction and testing upgrades.
 
 - Create `Box.proxy.test.js` in your test directory with the following JavaScript.
 
@@ -115,24 +121,24 @@ contract('Box', function () {
 ```js
 // test/Box.proxy.test.js
 // Load dependencies
-const { expect } = require('chai');
-const { deployProxy } = require('@openzeppelin/truffle-upgrades');
- 
+const { expect } = require("chai");
+const { deployProxy } = require("@openzeppelin/truffle-upgrades");
+
 // Load compiled artifacts
-const Box = artifacts.require('Box');
- 
+const Box = artifacts.require("Box");
+
 // Start test block
-contract('Box (proxy)', function () {
+contract("Box (proxy)", function () {
   beforeEach(async function () {
     // Deploy a new Box contract for each test
-    this.box = await deployProxy(Box, [42], {initializer: 'store'});
+    this.box = await deployProxy(Box, [42], { initializer: "store" });
   });
- 
+
   // Test case
-  it('retrieve returns a value previously initialized', async function () {
+  it("retrieve returns a value previously initialized", async function () {
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
-    expect((await this.box.retrieve()).toString()).to.equal('42');
+    expect((await this.box.retrieve()).toString()).to.equal("42");
   });
 });
 ```
@@ -166,14 +172,15 @@ $ npx truffle test
 
 ```js
 // migrations/2_deploy_box.js
-const Box = artifacts.require('Box');
- 
-const { deployProxy } = require('@openzeppelin/truffle-upgrades');
- 
+const Box = artifacts.require("Box");
+
+const { deployProxy } = require("@openzeppelin/truffle-upgrades");
+
 module.exports = async function (deployer) {
-  await deployProxy(Box, [42], { deployer, initializer: 'store' });
+  await deployProxy(Box, [42], { deployer, initializer: "store" });
 };
 ```
+
 - We would normally first deploy our contract to a local test (such as `ganache-cli`) and manually interact with it. For the purposes of time we will skip ahead to deploying to a public test network.
 
 - Deploy to Rinkeby. If you need assistance with configuration, see [Connecting to Public Test Networks](https://docs.openzeppelin.com/learn/connecting-to-public-test-networks). Note: any secrets such as mnemonics or Infura project IDs should not be committed to version control.
@@ -205,8 +212,9 @@ $ npx truffle migrate --network rinkeby
    > contract address:    0xF325bB49f91445F97241Ec5C286f90215a7E3BC6
 ...
 ```
+
 - We can interact with our contract using the Truffle console.
->Note: `Box.deployed()` is the address of our proxy contract.
+  > Note: `Box.deployed()` is the address of our proxy contract.
 
 ```bash
 $ npx truffle console --network rinkeby
@@ -232,16 +240,17 @@ truffle(rinkeby)> (await box.retrieve()).toString()
 - Create `3_transfer_ownership.js` in the migrations directory with the following JavaScript. Change the value of `gnosisSafe` to your Gnosis Safe address.
 
 `3_transfer_ownership.js`
+
 ```js
 // migrations/3_transfer_ownership.js
-const { admin } = require('@openzeppelin/truffle-upgrades');
- 
+const { admin } = require("@openzeppelin/truffle-upgrades");
+
 module.exports = async function (deployer, network) {
   // Use address of your Gnosis Safe
-  const gnosisSafe = '0x1c14600daeca8852BA559CC8EdB1C383B8825906';
- 
+  const gnosisSafe = "0x1c14600daeca8852BA559CC8EdB1C383B8825906";
+
   // Don't change ProxyAdmin ownership for our test network
-  if (network !== 'test') {
+  if (network !== "test") {
     // The owner of the ProxyAdmin can upgrade our contracts
     await admin.transferProxyAdminOwnership(gnosisSafe);
   }
@@ -270,28 +279,29 @@ $ npx truffle migrate --network rinkeby
 - Create the new implementation, `BoxV2.sol` in your contracts directory with the following Solidity code.
 
 `BoxV2.sol`
+
 ```bash
 // contracts/BoxV2.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.10;
- 
+pragma solidity >=0.8.2 <0.9.0;
+
 contract BoxV2 {
     uint256 private value;
- 
+
     // Emitted when the stored value changes
     event ValueChanged(uint256 newValue);
- 
+
     // Stores a new value in the contract
     function store(uint256 newValue) public {
         value = newValue;
         emit ValueChanged(newValue);
     }
-    
+
     // Reads the last stored value
     function retrieve() public view returns (uint256) {
         return value;
     }
-    
+
     // Increments the stored value by 1
     function increment() public {
         value = value + 1;
@@ -305,39 +315,40 @@ contract BoxV2 {
 - To test our upgrade we should create unit tests for the new implementation contract, along with creating higher level tests for testing interaction via the proxy, checking that state is maintained across upgrades.
 
 - We will create unit tests for the new implementation contract. We can add to the unit tests we already created to ensure high coverage.
-Create `BoxV2.test.js` in your test directory with the following JavaScript.
+  Create `BoxV2.test.js` in your test directory with the following JavaScript.
 
 `BoxV2.test.js`
+
 ```bash
 // test/BoxV2.test.js
 // Load dependencies
 const { expect } = require('chai');
- 
+
 // Load compiled artifacts
 const BoxV2 = artifacts.require('BoxV2');
- 
+
 // Start test block
 contract('BoxV2', function () {
   beforeEach(async function () {
     // Deploy a new BoxV2 contract for each test
     this.boxV2 = await BoxV2.new();
   });
- 
+
   // Test case
   it('retrieve returns a value previously stored', async function () {
     // Store a value
     await this.boxV2.store(42);
- 
+
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
     expect((await this.boxV2.retrieve()).toString()).to.equal('42');
   });
- 
+
   // Test case
   it('retrieve returns a value previously incremented', async function () {
     // Increment
     await this.boxV2.increment();
- 
+
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
     expect((await this.boxV2.retrieve()).toString()).to.equal('1');
@@ -346,7 +357,8 @@ contract('BoxV2', function () {
 ```
 
 - We can also create tests for interacting via the proxy after upgrading.
->Note: We don’t need to duplicate our unit tests here, this is for testing proxy interaction and testing state after upgrades.
+
+  > Note: We don’t need to duplicate our unit tests here, this is for testing proxy interaction and testing state after upgrades.
 
 - Create `BoxV2.proxy.test.js` in your test directory with the following JavaScript.
 
@@ -357,25 +369,25 @@ contract('BoxV2', function () {
 // Load dependencies
 const { expect } = require('chai');
 const { deployProxy, upgradeProxy} = require('@openzeppelin/truffle-upgrades');
- 
+
 // Load compiled artifacts
 const Box = artifacts.require('Box');
 const BoxV2 = artifacts.require('BoxV2');
- 
+
 // Start test block
 contract('BoxV2 (proxy)', function () {
- 
+
   beforeEach(async function () {
     // Deploy a new Box contract for each test
     this.box = await deployProxy(Box, [42], {initializer: 'store'});
     this.boxV2 = await upgradeProxy(this.box.address, BoxV2);
   });
- 
+
   // Test case
   it('retrieve returns a value previously incremented', async function () {
     // Increment
     await this.boxV2.increment();
- 
+
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
     expect((await this.boxV2.retrieve()).toString()).to.equal('43');
@@ -408,9 +420,9 @@ Using network 'test'.
 
 ## Deploy the new implementation
 
-- Once we have tested our new implementation, we can prepare the upgrade. This will validate and deploy our new implementation contract. 
+- Once we have tested our new implementation, we can prepare the upgrade. This will validate and deploy our new implementation contract.
 
->Note: We are only preparing the upgrade. We will use our Gnosis Safe to perform the actual upgrade.
+> Note: We are only preparing the upgrade. We will use our Gnosis Safe to perform the actual upgrade.
 
 Create `4_prepare_upgrade_boxv2.js` in the migrations directory with the following JavaScript.
 
@@ -418,19 +430,19 @@ Create `4_prepare_upgrade_boxv2.js` in the migrations directory with the followi
 
 ```js
 // migrations/4_prepare_upgrade_boxv2.js
-const Box = artifacts.require('Box');
-const BoxV2 = artifacts.require('BoxV2');
- 
-const { prepareUpgrade } = require('@openzeppelin/truffle-upgrades');
- 
+const Box = artifacts.require("Box");
+const BoxV2 = artifacts.require("BoxV2");
+
+const { prepareUpgrade } = require("@openzeppelin/truffle-upgrades");
+
 module.exports = async function (deployer) {
   const box = await Box.deployed();
   await prepareUpgrade(box.address, BoxV2, { deployer });
 };
 ```
 
-- We can run the migration on the Rinkeby network to deploy the new implementation. 
->Note: We need to skip dry run when running this migration.
+- We can run the migration on the Rinkeby network to deploy the new implementation.
+  > Note: We need to skip dry run when running this migration.
 
 ```bash
 $ npx truffle migrate --network rinkeby
@@ -469,7 +481,7 @@ truffle(rinkeby)> boxV2.address
 ![gnosis op-upgrade](./assets/image2.png)
 
 - Double check the addresses, and then press the Upgrade button.
-We will be shown a confirmation dialog to Submit the transaction.
+  We will be shown a confirmation dialog to Submit the transaction.
 
 ![gnosis conf dialog](./assets/image3.png)
 

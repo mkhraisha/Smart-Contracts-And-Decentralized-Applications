@@ -1,4 +1,5 @@
 # Coding Activity
+
 Develop Simple Payment Channel
 
 - [Explanation Video](https://youtu.be/d1oL_S1MNCI)
@@ -7,13 +8,14 @@ Develop Simple Payment Channel
 - It assumed you have knowledge of signing and verifying messages in Ethereum.
 
 ## Payment Channel
-- Ethereum transactions provide a secure way to transfer funds, but each transaction needs to be included in a block and mined. 
-- This means transactions take some time and require payment to compensate the miners for their work. 
+
+- Ethereum transactions provide a secure way to transfer funds, but each transaction needs to be included in a block and mined.
+- This means transactions take some time and require payment to compensate the miners for their work.
 - In particular, transaction fees make micropayments a difficult use case for Ethereum and other blockchains like it.
 
-- Payment channels allow participants to make repeated transfers of ether without using transactions. 
-- Delays and fees associated with transactions can be avoided. 
-- We'll develop a simple unidirectional payment channel between two parties. 
+- Payment channels allow participants to make repeated transfers of ether without using transactions.
+- Delays and fees associated with transactions can be avoided.
+- We'll develop a simple unidirectional payment channel between two parties.
 
 **Using it involves three steps:**
 
@@ -23,13 +25,12 @@ Develop Simple Payment Channel
 
 ![payment channel](./assets/payment-channel.png)
 
-- Importantly, only steps 1 and 3 require Ethereum transactions. 
-- Step 2 is accomplished off-chain through cryptographic signatures and some sort of communication between the two parties, such as email. 
+- Importantly, only steps 1 and 3 require Ethereum transactions.
+- Step 2 is accomplished off-chain through cryptographic signatures and some sort of communication between the two parties, such as email.
 - Only two transactions are required to support any number of transfers.
 
-- The recipient is guaranteed to receive their funds because the smart contract escrows the ether and honors a valid signed message. 
+- The recipient is guaranteed to receive their funds because the smart contract escrows the ether and honors a valid signed message.
 - The smart contract also enforces a timeout, so the sender is guaranteed to eventually recover their funds even if the recipient refuses to close the channel.
-
 
 ## Opening the Payment Channel
 
@@ -52,19 +53,20 @@ contract SimplePaymentChannel {
 ```
 
 ## Making Payments
-- The sender makes payments by sending messages to the recipient. This step is performed entirely outside of the Ethereum network. 
+
+- The sender makes payments by sending messages to the recipient. This step is performed entirely outside of the Ethereum network.
 - Messages are cryptographically signed by the sender and then transmitted directly to the recipient.
 
 **Each message includes the following information:**
 
 - The smart contract’s address, used to prevent cross-contract replay attacks.
 - The total amount of ether that is owed the recipient so far.
-- A payment channel is closed just once, at the end of a series of transfers. 
-- Because of this, only one of the messages sent will be redeemed. 
-- This is why each message specifies a cumulative total amount of ether owed, rather than the amount of the individual micropayment. 
+- A payment channel is closed just once, at the end of a series of transfers.
+- Because of this, only one of the messages sent will be redeemed.
+- This is why each message specifies a cumulative total amount of ether owed, rather than the amount of the individual micropayment.
 - The recipient will naturally choose to redeem the most recent message because that’s the one with the highest total.
 
-- Note that because the smart contract will only honor a single message, no per-message nonce is required. 
+- Note that because the smart contract will only honor a single message, no per-message nonce is required.
 - The address of the smart contract is still used to prevent a message intended for one payment channel from being used for a different channel.
 
 - Payment messages can be constructed and signed in any language that supports cryptographic hashing and signing operations. The following code is written in JavaScript and uses ethereumjs-abi:
@@ -73,25 +75,29 @@ contract SimplePaymentChannel {
 function constructPaymentMessage(contractAddress, amount) {
   return ethereumjs.ABI.soliditySHA3(
     ["address", "uint256"],
-    [contractAddress, amount],
+    [contractAddress, amount]
   );
 }
 
 function signMessage(message, callback) {
-  web3.personal.sign("0x" + message.toString("hex"), web3.eth.defaultAccount,
-    callback);
+  web3.personal.sign(
+    "0x" + message.toString("hex"),
+    web3.eth.defaultAccount,
+    callback
+  );
 }
 
 // contractAddress is used to prevent cross-contract replay attacks.
 // amount, in wei, specifies how much ether should be sent.
 function signPayment(contractAddress, amount, callback) {
-    var message = constructPaymentMessage(contractAddress, amount);
-    signMessage(message, callback);
+  var message = constructPaymentMessage(contractAddress, amount);
+  signMessage(message, callback);
 }
 ```
 
 ## Verifying Payments
-- The recipient keeps track of the latest message and redeems it when it’s time to close the payment channel. 
+
+- The recipient keeps track of the latest message and redeems it when it’s time to close the payment channel.
 - This means it’s critical that the recipient perform their own verification of each message. Otherwise there is no guarantee that the recipient will be able to get paid in the end.
 
 - The recipient should verify each message using the following process:
@@ -130,13 +136,13 @@ function _prefixed(bytes32 hash) internal pure returns (bytes32) {
 
 ## Closing the Payment Channel
 
-- When the recipient is ready to receive their funds, it’s time to close the payment channel by calling a close function on the smart contract. 
-- Closing the channel pays the recipient the ether they’re owed and destroys the contract, sending any remaining ether back to the sender. 
+- When the recipient is ready to receive their funds, it’s time to close the payment channel by calling a close function on the smart contract.
+- Closing the channel pays the recipient the ether they’re owed and destroys the contract, sending any remaining ether back to the sender.
 - To close the channel, the recipient needs to share a message signed by the sender.
 
-- The smart contract must verify that the message contains a valid signature from the sender. 
-- The process for doing this verification is the same as the process the recipient uses. 
-- The Solidity functions `_isValidSignature` and ``_`recoverSigner` work just like their JavaScript counterparts in the previous section. The latter is borrowed from the `ReceiverPays` contract in “Signing and Verifying Messages in Ethereum”.
+- The smart contract must verify that the message contains a valid signature from the sender.
+- The process for doing this verification is the same as the process the recipient uses.
+- The Solidity functions `_isValidSignature` and ``_`recoverSigner`work just like their JavaScript counterparts in the previous section. The latter is borrowed from the`ReceiverPays` contract in “Signing and Verifying Messages in Ethereum”.
 
 ```js
  function _isValidSignature(uint256 _amount, bytes memory _signature)internal view returns (bool)
@@ -159,13 +165,14 @@ function close(uint256 _amount, bytes memory _signature) public {
 }
 ```
 
-- The close function can only be called by the payment channel recipient, who will naturally pass the most recent payment message because that message carries the highest total owed. 
+- The close function can only be called by the payment channel recipient, who will naturally pass the most recent payment message because that message carries the highest total owed.
 - If the sender were allowed to call this function, they could provide a message with a lower amount and cheat the recipient out of what they’re owed.
 
 - The function verifies the signed message matches the given parameters. - If everything checks out, the recipient is sent their portion of the ether, and the sender is sent the rest via a `selfdestruct`.
 
 ## Channel Expiration
-- The recipient can close the payment channel at any time, but if they fail to do so, the sender needs a way to recover their escrowed funds. 
+
+- The recipient can close the payment channel at any time, but if they fail to do so, the sender needs a way to recover their escrowed funds.
 - An expiration time was set at the time of contract deployment. Once that time is reached, the sender can call claimTimeout to recover their funds.
 
 ```js
@@ -181,6 +188,7 @@ function claimTimeout() public {
 - After this function is called, the recipient can no longer receive any ether, so it’s important that the recipient close the channel before the expiration is reached.
 
 ## Key TakeAways
+
 - Payment channels support safe, off-chain fund transfers while avoiding per-transfer Ethereum transaction fees.
 - Payments are cumulative, and only one is redeemed when closing the channel.
 - Transfers are guaranteed via escrowed funds and cryptographic signatures.
@@ -190,7 +198,7 @@ function claimTimeout() public {
 
 ```js
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract SimplePaymentChannel {
     address public sender;     // The account sending payments.

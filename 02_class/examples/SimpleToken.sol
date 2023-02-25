@@ -2,7 +2,7 @@
 // The above line tells that source code is licensed under MIT
 
 // specify the solidity version
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 // contract definition starts
 contract Token {

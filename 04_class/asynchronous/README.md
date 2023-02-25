@@ -1,8 +1,10 @@
 # Coding Activity
 
-Develop a contract that handles time. Use Remix IDE  to test the contract as learnt in [this](../../class-2/asynchronous/README.md) activity.
+Develop a contract that handles time. Use Remix IDE to test the contract as learnt in [this](../../class-2/asynchronous/README.md) activity.
+
 ## Background
-- In order to make your smart contract to transactions differently after some point in the future, the contract needs to have a way to express and store values that represent time. 
+
+- In order to make your smart contract to transactions differently after some point in the future, the contract needs to have a way to express and store values that represent time.
 - The Ethereum Virtual Machine represents time as the (integer) number of seconds since the “Unix epoch”, and the current time is accessible to a Solidity program as now, which is an alias for block.timestamp.
 
 - You will create a the code that does nothing beyond remembering when it was created:
@@ -10,7 +12,7 @@ Develop a contract that handles time. Use Remix IDE  to test the contract as lea
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract Time {
     uint256 public createTime;
@@ -20,6 +22,7 @@ contract Time {
     }
 }
 ```
+
 ## Explanation
 
 - The system-defined variable `block.timestamp` contains the current time in seconds since the Unix epoch. This is defined as the timestamp of the block (on the blockchain) that the transaction is a part of.
@@ -27,9 +30,10 @@ contract Time {
 - The natural unit of time in the EVM is seconds.
 
 ### Relative Time
-- To demonstrate using time to influence transaction processing, you'll develop a smart contract that saves save money for a specified period of time. 
+
+- To demonstrate using time to influence transaction processing, you'll develop a smart contract that saves save money for a specified period of time.
 - During that period, you (or anybody else!) can deposit ether in the contract, but the contract will not let you withdraw any ether until the waiting period is over.
-- Solidity has “time units” built in. You can specify 3 days or 60 months, for instance. The savings contract will be parameterized by a waiting period specified in days. 
+- Solidity has “time units” built in. You can specify 3 days or 60 months, for instance. The savings contract will be parameterized by a waiting period specified in days.
 - Because the EVM naturally stores time in seconds, the contract must scale the waiting period by the number of seconds in a day, which is given by the literal 1 days in Solidity.
 
 `savings.sol`
@@ -37,7 +41,7 @@ contract Time {
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract Savings {
     address owner;
@@ -75,9 +79,11 @@ contract Savings {
 - Deposits are allowed at any time. Note also that the constructor has the payable modifier, which allows ether to be attached (and transferred) to the contract during deployment.
 
 **Key Takeaways**
+
 - Each block in the blockchain includes a timestamp specified as the number of seconds since the Unix epoch. Time values are integers.
 - Solidity smart contracts can access the timestamp of the current block as `block.timestamp`.
 - Solidity provides convenient time units like days and months, which are helpful in computing time spans.
 
 #### References
+
 - [Units and Globally Available Variables](https://docs.soliditylang.org/en/v0.6.10/units-and-global-variables.html#units-and-globally-available-variables)

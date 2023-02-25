@@ -1,7 +1,9 @@
 # Coding Activity - 1
+
 Starting, Pausing and Stopping Smart Contracts
 
 ## Prerequisites
+
 1. Chrome or Firefox browser.
 2. An Internet connection
 3. Open Remix with the following Smart Contract:
@@ -9,10 +11,10 @@ Starting, Pausing and Stopping Smart Contracts
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract StartStopUpdateExample {
-    function sendMoney() public payable {   
+    function sendMoney() public payable {
     }
 
     function withdrawAllMoney(address payable _to) public {
@@ -48,7 +50,7 @@ contract StartStopUpdateExample {
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract StartStopUpdateExample {
     address owner;
@@ -69,7 +71,7 @@ contract StartStopUpdateExample {
 
 ### Try to send and withdraw money again
 
->Note: Don’t forget to re-deploy the smart contract.
+> Note: Don’t forget to re-deploy the smart contract.
 
 1. Deploy the Smart Contract using the first account in your account list
 2. Send 1 Ether to your smart contract
@@ -89,7 +91,7 @@ This time you can see that you can send money from any account. But you can use 
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract StartStopUpdateExample {
     address owner;
@@ -117,7 +119,6 @@ contract StartStopUpdateExample {
 
 ![](./assets/1/image10.png)
 
-
 ### Try to withdraw money
 
 - It won’t work and show you an error message. The contract is paused.
@@ -131,7 +132,7 @@ contract StartStopUpdateExample {
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract StartStopUpdateExample {
     address owner;
@@ -169,9 +170,11 @@ contract StartStopUpdateExample {
 ![](./assets/1/image12.png)
 
 # Coding Activity - 2
+
 Error Handling in Solidity
 
 Prerequisites
+
 1. Chrome or Firefox browser.
 2. An Internet connection
 3. Open Remix with the following Smart Contract:
@@ -214,7 +217,7 @@ contract ExceptionExample {
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract ExceptionExample {
     mapping(address => uint) public balanceReceived;
@@ -243,10 +246,10 @@ contract ExceptionExample {
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract ExceptionExample {
-    
+
     mapping(address => uint64) public balanceReceived;
 
     function receiveMoney() public payable {
@@ -266,7 +269,7 @@ contract ExceptionExample {
 ![](./assets/2/image7.png)
 
 - It is lower, because the uint64 rolls over to 0 after reaching the maximum value of 18446744073709551616 – that’s around 18.44 Ether
-- Here we could use asserts to make sure we don’t roll over – in both directions! 
+- Here we could use asserts to make sure we don’t roll over – in both directions!
 - When withdrawals happen, we don’t suddenly have more balance available than before and when deposits happen that the balance after depositing is really higher than before.
 
 ### Add an assert, to make sure the balance can only grow larger
@@ -274,7 +277,7 @@ contract ExceptionExample {
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract ExceptionExample {
     mapping(address => uint64) public balanceReceived;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity ^0.8.4.0;
 
 contract Greeter {
     // state variables
@@ -14,3 +14,6 @@ contract Greeter {
         return yourName;
     }
 }
+
+
+

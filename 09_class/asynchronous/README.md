@@ -1,4 +1,5 @@
-# Coding Activity 
+# Coding Activity
+
 ERC20 : Any contract that follow the [ERC20 standard](https://eips.ethereum.org/EIPS/eip-20) is a ERC20 token.
 
 ERC20 tokens provide functionalities to transfer tokens allow others to transfer tokens on behalf of the token holder
@@ -7,7 +8,7 @@ ERC20 tokens provide functionalities to transfer tokens allow others to transfer
 
 ```js
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.0/contracts/token/ERC20/IERC20.sol
 interface IERC20 {
@@ -47,7 +48,6 @@ Here is an example contract, TokenSwap, to trade one ERC20 token for another.
 
 This contract will swap tokens by calling
 
-
 transferFrom(address sender, address recipient, uint256 amount)
 which will transfer amount of token from sender to recipient.
 
@@ -59,7 +59,7 @@ prior to TokenSwap calling transferFrom
 
 ```js
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.0/contracts/token/ERC20/IERC20.sol";
 
@@ -114,7 +114,7 @@ contract TokenSwap {
 }
 ```
 
-Test Contract on Remix IDE using following steps : 
+Test Contract on Remix IDE using following steps :
 
 1. Alice has 100 tokens from AliceCoin, which is a ERC20 token.
 2. Bob has 100 tokens from BobCoin, which is also a ERC20 token.
