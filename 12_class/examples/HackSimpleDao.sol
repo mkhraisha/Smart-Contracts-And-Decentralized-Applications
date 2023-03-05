@@ -2,7 +2,7 @@
 
 // Demo: Hack SimpleDAO
 // Write an attack contract in solidity to steal funds from the following SimpleDAO contract.
-pragma solidity ^0.7.1;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract SimpleDAO {
     mapping(address => uint) public balance;

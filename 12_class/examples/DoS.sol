@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.6;
+pragma solidity >=0.8.2 <0.9.0;
 /*
 The goal of KingOfEther is to become the king by sending more Ether than
 the previous king. Previous king will be refunded with the amount of Ether

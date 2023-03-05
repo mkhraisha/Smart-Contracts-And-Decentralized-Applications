@@ -40,14 +40,12 @@
   "immutableReferences": {},
   "sourceMap": "92:1058:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "92:1058:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;198:337;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;277:25;;:::i;:::-;327:47;;;;;;;;362:2;346:19;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;327:47;;;;370:2;327:47;;;318:56;;389:10;384:145;410:2;405;:7;384:145;;;466:2;452:17;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;434:6;:11;;;446:2;434:15;;;;;;;;;;;;;:35;;;;414:4;;;;;;;384:145;;;;198:337;;;:::o;-1:-1:-1:-;;;;;;;;;;;;;;;;;;;:::o;5:130::-;;85:6;72:20;63:29;;97:33;124:5;97:33;:::i;:::-;57:78;;;;:::o;142:241::-;;246:2;234:9;225:7;221:23;217:32;214:2;;;262:1;259;252:12;214:2;297:1;314:53;359:7;350:6;339:9;335:22;314:53;:::i;:::-;304:63;;276:97;208:175;;;;:::o;391:269::-;;550:104;650:3;642:6;550:104;:::i;:::-;536:118;;529:131;;;;:::o;669:189::-;;764:54;814:3;806:6;764:54;:::i;:::-;847:4;842:3;838:14;824:28;;757:101;;;;:::o;901:1052::-;;1094:79;1167:5;1094:79;:::i;:::-;1186:109;1288:6;1283:3;1186:109;:::i;:::-;1179:116;;1318:3;1360:4;1352:6;1348:17;1343:3;1339:27;1387:81;1462:5;1387:81;:::i;:::-;1488:7;1516:1;1501:413;1526:6;1523:1;1520:13;1501:413;;;1588:9;1582:4;1578:20;1573:3;1566:33;1633:6;1627:13;1655:122;1772:4;1757:13;1655:122;:::i;:::-;1647:130;;1794:85;1872:6;1794:85;:::i;:::-;1784:95;;1902:4;1897:3;1893:14;1886:21;;1558:356;1548:1;1545;1541:9;1536:14;;1501:413;;;1505:14;1927:4;1920:11;;1944:3;1937:10;;1073:880;;;;;;;;;:::o;1992:694::-;;2135:54;2183:5;2135:54;:::i;:::-;2202:84;2279:6;2274:3;2202:84;:::i;:::-;2195:91;;2307:56;2357:5;2307:56;:::i;:::-;2383:7;2411:1;2396:268;2421:6;2418:1;2415:13;2396:268;;;2488:6;2482:13;2509:71;2576:3;2561:13;2509:71;:::i;:::-;2502:78;;2597:60;2650:6;2597:60;:::i;:::-;2587:70;;2453:211;2443:1;2440;2436:9;2431:14;;2396:268;;;2400:14;2677:3;2670:10;;2114:572;;;;;;;:::o;2761:678::-;;2926:4;2921:3;2917:14;3009:4;3002:5;2998:16;2992:23;3061:3;3055:4;3051:14;3044:4;3039:3;3035:14;3028:38;3081:161;3237:4;3223:12;3081:161;:::i;:::-;3073:169;;2946:308;3324:4;3317:5;3313:16;3307:23;3336:71;3401:4;3396:3;3392:14;3378:12;3336:71;:::i;:::-;3264:149;3430:4;3423:11;;2899:540;;;;;:::o;3446:111::-;3527:24;3545:5;3527:24;:::i;:::-;3522:3;3515:37;3509:48;;:::o;3564:398::-;;3755:2;3744:9;3740:18;3732:26;;3805:9;3799:4;3795:20;3791:1;3780:9;3776:17;3769:47;3830:122;3947:4;3938:6;3830:122;:::i;:::-;3822:130;;3726:236;;;;:::o;3969:176::-;;4080:3;4072:11;;4118:4;4113:3;4109:14;4101:22;;4066:79;;;:::o;4152:151::-;;4238:3;4230:11;;4276:4;4271:3;4267:14;4259:22;;4224:79;;;:::o;4310:162::-;;4444:5;4438:12;4428:22;;4409:63;;;:::o;4479:137::-;;4588:5;4582:12;4572:22;;4553:63;;;:::o;4623:133::-;;4746:4;4741:3;4737:14;4729:22;;4723:33;;;:::o;4763:108::-;;4861:4;4856:3;4852:14;4844:22;;4838:33;;;:::o;4879:201::-;;5032:6;5027:3;5020:19;5069:4;5064:3;5060:14;5045:29;;5013:67;;;;:::o;5089:176::-;;5217:6;5212:3;5205:19;5254:4;5249:3;5245:14;5230:29;;5198:67;;;;:::o;5273:72::-;;5335:5;5324:16;;5318:27;;;:::o;5352:117::-;5421:24;5439:5;5421:24;:::i;:::-;5414:5;5411:35;5401:2;;5460:1;5457;5450:12;5401:2;5395:74;:::o",
-  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.7.1;\npragma experimental ABIEncoderV2;\n\nlibrary SquareLib {\n    \n    struct MagicSquare {\n        uint256[][] rows;\n        uint256 n;\n    }\n\n    function initialize(uint256 _n)\n        external\n        pure\n        returns (MagicSquare memory square)\n    {\n        square = MagicSquare({rows: new uint256[][](_n), n: _n});\n        for (uint256 _i = 0; _i < _n; _i++) {\n            square.rows[_i] = new uint256[](_n); // initialize each row with _n number of columns\n        }\n    }\n\n    function step(\n        MagicSquare memory square,\n        uint256 _x,\n        uint256 _y,\n        uint256 _i\n    )\n        internal\n        pure\n        returns (\n            uint256 _newX,\n            uint256 _newY,\n            uint256 _newI\n        )\n    {\n        if (square.rows[_x][_y] != 0) {\n            _newX = (_x + 2) % square.n;\n            _newY = (square.n + _y - 1) % square.n;\n            _newI = _i - 1;\n        } else {\n            square.rows[_x][_y] = _i;\n            _newX = (square.n + _x - 1) % square.n;\n            _newY = (_y + 1) % square.n;\n            _newI = _i;\n        }\n    }\n}",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.8.2 <0.9.0;\npragma experimental ABIEncoderV2;\n\nlibrary SquareLib {\n    \n    struct MagicSquare {\n        uint256[][] rows;\n        uint256 n;\n    }\n\n    function initialize(uint256 _n)\n        external\n        pure\n        returns (MagicSquare memory square)\n    {\n        square = MagicSquare({rows: new uint256[][](_n), n: _n});\n        for (uint256 _i = 0; _i < _n; _i++) {\n            square.rows[_i] = new uint256[](_n); // initialize each row with _n number of columns\n        }\n    }\n\n    function step(\n        MagicSquare memory square,\n        uint256 _x,\n        uint256 _y,\n        uint256 _i\n    )\n        internal\n        pure\n        returns (\n            uint256 _newX,\n            uint256 _newY,\n            uint256 _newI\n        )\n    {\n        if (square.rows[_x][_y] != 0) {\n            _newX = (_x + 2) % square.n;\n            _newY = (square.n + _y - 1) % square.n;\n            _newI = _i - 1;\n        } else {\n            square.rows[_x][_y] = _i;\n            _newX = (square.n + _x - 1) % square.n;\n            _newY = (_y + 1) % square.n;\n            _newI = _i;\n        }\n    }\n}",
   "sourcePath": "/Users/dhruvin/gbc/bcdv-1010/solidity-magic-square/contracts/SquareLib.sol",
   "ast": {
     "absolutePath": "/Users/dhruvin/gbc/bcdv-1010/solidity-magic-square/contracts/SquareLib.sol",
     "exportedSymbols": {
-      "SquareLib": [
-        339
-      ]
+      "SquareLib": [339]
     },
     "id": 340,
     "license": "MIT",
@@ -55,21 +53,13 @@
     "nodes": [
       {
         "id": 191,
-        "literals": [
-          "solidity",
-          "^",
-          "0.7",
-          ".1"
-        ],
+        "literals": ["solidity", "^", "0.7", ".1"],
         "nodeType": "PragmaDirective",
         "src": "33:23:2"
       },
       {
         "id": 192,
-        "literals": [
-          "experimental",
-          "ABIEncoderV2"
-        ],
+        "literals": ["experimental", "ABIEncoderV2"],
         "nodeType": "PragmaDirective",
         "src": "57:33:2"
       },
@@ -80,9 +70,7 @@
         "contractKind": "library",
         "fullyImplemented": true,
         "id": 339,
-        "linearizedBaseContracts": [
-          339
-        ],
+        "linearizedBaseContracts": [339],
         "name": "SquareLib",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -314,10 +302,7 @@
                       "isPure": false,
                       "kind": "structConstructorCall",
                       "lValueRequested": false,
-                      "names": [
-                        "rows",
-                        "n"
-                      ],
+                      "names": ["rows", "n"],
                       "nodeType": "FunctionCall",
                       "src": "327:47:2",
                       "tryCall": false,
@@ -527,9 +512,7 @@
                   },
                   "id": 241,
                   "initializationExpression": {
-                    "assignments": [
-                      219
-                    ],
+                    "assignments": [219],
                     "declarations": [
                       {
                         "constant": false,
@@ -1923,21 +1906,14 @@
     "attributes": {
       "absolutePath": "/Users/dhruvin/gbc/bcdv-1010/solidity-magic-square/contracts/SquareLib.sol",
       "exportedSymbols": {
-        "SquareLib": [
-          339
-        ]
+        "SquareLib": [339]
       },
       "license": "MIT"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.7",
-            ".1"
-          ]
+          "literals": ["solidity", "^", "0.7", ".1"]
         },
         "id": 191,
         "name": "PragmaDirective",
@@ -1945,10 +1921,7 @@
       },
       {
         "attributes": {
-          "literals": [
-            "experimental",
-            "ABIEncoderV2"
-          ]
+          "literals": ["experimental", "ABIEncoderV2"]
         },
         "id": 192,
         "name": "PragmaDirective",
@@ -1957,17 +1930,11 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "library",
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            339
-          ],
+          "linearizedBaseContracts": [339],
           "name": "SquareLib",
           "scope": 340
         },
@@ -2063,9 +2030,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "initialize",
               "scope": 339,
               "stateMutability": "pure",
@@ -2156,9 +2121,7 @@
                         "children": [
                           {
                             "attributes": {
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 204,
                               "type": "struct SquareLib.MagicSquare memory",
                               "value": "square"
@@ -2174,10 +2137,7 @@
                               "isPure": false,
                               "isStructConstructorCall": true,
                               "lValueRequested": false,
-                              "names": [
-                                "rows",
-                                "n"
-                              ],
+                              "names": ["rows", "n"],
                               "tryCall": false,
                               "type": "struct SquareLib.MagicSquare memory",
                               "type_conversion": false
@@ -2195,9 +2155,7 @@
                                       "typeString": "uint256"
                                     }
                                   ],
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 199,
                                   "type": "type(struct SquareLib.MagicSquare storage pointer)",
                                   "value": "MagicSquare"
@@ -2213,9 +2171,7 @@
                                   "isPure": false,
                                   "isStructConstructorCall": false,
                                   "lValueRequested": false,
-                                  "names": [
-                                    null
-                                  ],
+                                  "names": [null],
                                   "tryCall": false,
                                   "type": "uint256[] memory[] memory",
                                   "type_conversion": false
@@ -2272,9 +2228,7 @@
                                   },
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 201,
                                       "type": "uint256",
                                       "value": "_n"
@@ -2290,9 +2244,7 @@
                               },
                               {
                                 "attributes": {
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 201,
                                   "type": "uint256",
                                   "value": "_n"
@@ -2320,9 +2272,7 @@
                     "children": [
                       {
                         "attributes": {
-                          "assignments": [
-                            219
-                          ]
+                          "assignments": [219]
                         },
                         "children": [
                           {
@@ -2387,9 +2337,7 @@
                         "children": [
                           {
                             "attributes": {
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 219,
                               "type": "uint256",
                               "value": "_i"
@@ -2400,9 +2348,7 @@
                           },
                           {
                             "attributes": {
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 201,
                               "type": "uint256",
                               "value": "_n"
@@ -2431,9 +2377,7 @@
                             "children": [
                               {
                                 "attributes": {
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 219,
                                   "type": "uint256",
                                   "value": "_i"
@@ -2488,9 +2432,7 @@
                                         "children": [
                                           {
                                             "attributes": {
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 204,
                                               "type": "struct SquareLib.MagicSquare memory",
                                               "value": "square"
@@ -2506,9 +2448,7 @@
                                       },
                                       {
                                         "attributes": {
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 219,
                                           "type": "uint256",
                                           "value": "_i"
@@ -2529,9 +2469,7 @@
                                       "isPure": false,
                                       "isStructConstructorCall": false,
                                       "lValueRequested": false,
-                                      "names": [
-                                        null
-                                      ],
+                                      "names": [null],
                                       "tryCall": false,
                                       "type": "uint256[] memory",
                                       "type_conversion": false
@@ -2578,9 +2516,7 @@
                                       },
                                       {
                                         "attributes": {
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 201,
                                           "type": "uint256",
                                           "value": "_n"
@@ -2629,9 +2565,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "step",
               "scope": 339,
               "stateMutability": "pure",
@@ -2885,9 +2819,7 @@
                                     "children": [
                                       {
                                         "attributes": {
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 245,
                                           "type": "struct SquareLib.MagicSquare memory",
                                           "value": "square"
@@ -2903,9 +2835,7 @@
                                   },
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 247,
                                       "type": "uint256",
                                       "value": "_x"
@@ -2921,9 +2851,7 @@
                               },
                               {
                                 "attributes": {
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 249,
                                   "type": "uint256",
                                   "value": "_y"
@@ -2973,9 +2901,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 254,
                                       "type": "uint256",
                                       "value": "_newX"
@@ -3073,9 +2999,7 @@
                                         "children": [
                                           {
                                             "attributes": {
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 245,
                                               "type": "struct SquareLib.MagicSquare memory",
                                               "value": "square"
@@ -3118,9 +3042,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 256,
                                       "type": "uint256",
                                       "value": "_newY"
@@ -3266,9 +3188,7 @@
                                         "children": [
                                           {
                                             "attributes": {
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 245,
                                               "type": "struct SquareLib.MagicSquare memory",
                                               "value": "square"
@@ -3311,9 +3231,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 258,
                                       "type": "uint256",
                                       "value": "_newI"
@@ -3338,9 +3256,7 @@
                                     "children": [
                                       {
                                         "attributes": {
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 251,
                                           "type": "uint256",
                                           "value": "_i"
@@ -3447,9 +3363,7 @@
                                           },
                                           {
                                             "attributes": {
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 247,
                                               "type": "uint256",
                                               "value": "_x"
@@ -3465,9 +3379,7 @@
                                       },
                                       {
                                         "attributes": {
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 249,
                                           "type": "uint256",
                                           "value": "_y"
@@ -3483,9 +3395,7 @@
                                   },
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 251,
                                       "type": "uint256",
                                       "value": "_i"
@@ -3518,9 +3428,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 254,
                                       "type": "uint256",
                                       "value": "_newX"
@@ -3666,9 +3574,7 @@
                                         "children": [
                                           {
                                             "attributes": {
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 245,
                                               "type": "struct SquareLib.MagicSquare memory",
                                               "value": "square"
@@ -3711,9 +3617,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 256,
                                       "type": "uint256",
                                       "value": "_newY"
@@ -3811,9 +3715,7 @@
                                         "children": [
                                           {
                                             "attributes": {
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 245,
                                               "type": "struct SquareLib.MagicSquare memory",
                                               "value": "square"
@@ -3856,9 +3758,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 258,
                                       "type": "uint256",
                                       "value": "_newI"
@@ -3869,9 +3769,7 @@
                                   },
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 251,
                                       "type": "uint256",
                                       "value": "_i"

@@ -61,14 +61,12 @@
   "immutableReferences": {},
   "sourceMap": "58:456:0:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "58:456:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;415:97;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;123:175;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;304:104;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;415:97;459:18;;:::i;:::-;496:9;489:16;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;415:97;:::o;123:175::-;167:4;201:1;191:6;:11;;:27;;;;;216:2;206:6;:12;;191:27;183:36;;;;;;250:10;230:9;240:6;230:17;;;;;;;;;:30;;;;;;;;;;;;;;;;;;278:6;271:13;;123:175;;;:::o;304:104::-;358:7;384:9;394:6;384:17;;;;;;;;;;;;;;;;;;377:24;;304:104;;;:::o;-1:-1:-1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
-  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.7.1;\n\ncontract Adoption {\n\n    address[16] private _adopters;\n    \n    function adopt(uint _petId) public returns (uint) {\n        require(_petId >= 0 && _petId <= 15);\n\n        _adopters[_petId] = msg.sender;\n\n        return _petId;       \n    }\n\n    function getAdopter(uint _petId) public view returns (address) {\n        return _adopters[_petId];\n    } \n\n    function getAdopters() public view returns (address[16] memory) {\n        return _adopters;\n    }\n}",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.8.2 <0.9.0;\n\ncontract Adoption {\n\n    address[16] private _adopters;\n    \n    function adopt(uint _petId) public returns (uint) {\n        require(_petId >= 0 && _petId <= 15);\n\n        _adopters[_petId] = msg.sender;\n\n        return _petId;       \n    }\n\n    function getAdopter(uint _petId) public view returns (address) {\n        return _adopters[_petId];\n    } \n\n    function getAdopters() public view returns (address[16] memory) {\n        return _adopters;\n    }\n}",
   "sourcePath": "/Users/dhruvin/gbc/bcdv-1010/petshop/contracts/Adaption.sol",
   "ast": {
     "absolutePath": "/Users/dhruvin/gbc/bcdv-1010/petshop/contracts/Adaption.sol",
     "exportedSymbols": {
-      "Adoption": [
-        55
-      ]
+      "Adoption": [55]
     },
     "id": 56,
     "license": "MIT",
@@ -76,12 +74,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.7",
-          ".1"
-        ],
+        "literals": ["solidity", "^", "0.7", ".1"],
         "nodeType": "PragmaDirective",
         "src": "33:23:0"
       },
@@ -92,9 +85,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 55,
-        "linearizedBaseContracts": [
-          55
-        ],
+        "linearizedBaseContracts": [55],
         "name": "Adoption",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -280,10 +271,7 @@
                       "id": 12,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "183:7:0",
                       "typeDescriptions": {
@@ -737,21 +725,14 @@
     "attributes": {
       "absolutePath": "/Users/dhruvin/gbc/bcdv-1010/petshop/contracts/Adaption.sol",
       "exportedSymbols": {
-        "Adoption": [
-          55
-        ]
+        "Adoption": [55]
       },
       "license": "MIT"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.7",
-            ".1"
-          ]
+          "literals": ["solidity", "^", "0.7", ".1"]
         },
         "id": 1,
         "name": "PragmaDirective",
@@ -760,17 +741,11 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "contract",
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            55
-          ],
+          "linearizedBaseContracts": [55],
           "name": "Adoption",
           "scope": 56
         },
@@ -833,9 +808,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "adopt",
               "scope": 55,
               "stateMutability": "nonpayable",
@@ -920,9 +893,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -936,10 +907,7 @@
                                   "typeString": "bool"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool) pure",
                               "value": "require"
@@ -978,9 +946,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 7,
                                       "type": "uint256",
                                       "value": "_petId"
@@ -1025,9 +991,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 7,
                                       "type": "uint256",
                                       "value": "_petId"
@@ -1094,9 +1058,7 @@
                             "children": [
                               {
                                 "attributes": {
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 5,
                                   "type": "address[16] storage ref",
                                   "value": "_adopters"
@@ -1107,9 +1069,7 @@
                               },
                               {
                                 "attributes": {
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 7,
                                   "type": "uint256",
                                   "value": "_petId"
@@ -1135,9 +1095,7 @@
                             "children": [
                               {
                                 "attributes": {
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": -15,
                                   "type": "msg",
                                   "value": "msg"
@@ -1168,9 +1126,7 @@
                     "children": [
                       {
                         "attributes": {
-                          "overloadedDeclarations": [
-                            null
-                          ],
+                          "overloadedDeclarations": [null],
                           "referencedDeclaration": 7,
                           "type": "uint256",
                           "value": "_petId"
@@ -1200,9 +1156,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getAdopter",
               "scope": 55,
               "stateMutability": "view",
@@ -1295,9 +1249,7 @@
                         "children": [
                           {
                             "attributes": {
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 5,
                               "type": "address[16] storage ref",
                               "value": "_adopters"
@@ -1308,9 +1260,7 @@
                           },
                           {
                             "attributes": {
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 34,
                               "type": "uint256",
                               "value": "_petId"
@@ -1345,9 +1295,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getAdopters",
               "scope": 55,
               "stateMutability": "view",
@@ -1357,9 +1305,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 45,
@@ -1434,9 +1380,7 @@
                     "children": [
                       {
                         "attributes": {
-                          "overloadedDeclarations": [
-                            null
-                          ],
+                          "overloadedDeclarations": [null],
                           "referencedDeclaration": 5,
                           "type": "address[16] storage ref",
                           "value": "_adopters"

@@ -48,7 +48,7 @@ Box.sol
 ```js
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.0;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract Box {
     uint256 private value;
@@ -143,7 +143,7 @@ contract("Box (proxy)", function () {
 });
 ```
 
-- Before we can compile our contract, we will need to change the solc version to ^0.6.10 in `truffle-config.js` as our contract has pragma solidity ^0.6.10
+- Before we can compile our contract, we will need to change the solc version to >=0.8.2 <0.9.0; in `truffle-config.js` as our contract has pragma solidity >=0.8.2 <0.9.0;
 
 - We can then run our tests.
 

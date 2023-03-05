@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.6;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract Car {
     address public owner;
