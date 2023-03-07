@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/york-blockchain/Smart-Contracts-And-Decentralized-Applications.git"
+    "url": "git+https://github.com/mkhraisha/Smart-Contracts-And-Decentralized-Applications.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/york-blockchain/Smart-Contracts-And-Decentralized-Applications.git/issues"
+    "url": "https://github.com/mkhraisha/Smart-Contracts-And-Decentralized-Applications.git/issues"
   },
-  "homepage": "https://github.com/york-blockchain/Smart-Contracts-And-Decentralized-Applications.git/class-10/examples//drizzle-tokensale#readme",
+  "homepage": "https://github.com/mkhraisha/Smart-Contracts-And-Decentralized-Applications.git/class-10/examples//drizzle-tokensale#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^2.4.0"
   },
