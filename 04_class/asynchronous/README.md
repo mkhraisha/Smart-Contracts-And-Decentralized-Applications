@@ -47,6 +47,12 @@ contract Savings {
     address owner;
     uint256 deadline;
 
+    constructor(uint256 numberOfDays) public payable {
+        owner = msg.sender;
+        deadline = block.timestamp + (numberOfDays * 1 days);
+    }
+
+
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
@@ -56,10 +62,6 @@ contract Savings {
         require(msg.value == amount);
     }
 
-    constructor(uint256 numberOfDays) public payable {
-        owner = msg.sender;
-        deadline = block.timestamp + (numberOfDays * 1 days);
-    }
 
     function withdraw() public onlyOwner {
         require(block.timestamp >= deadline);
