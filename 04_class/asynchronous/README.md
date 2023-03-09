@@ -88,4 +88,4 @@ contract Savings {
 
 #### References
 
-- [Units and Globally Available Variables](https://docs.soliditylang.org/en/v0.6.10/units-and-global-variables.html#units-and-globally-available-variables)
+- [Units and Globally Available Variables](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#units-and-globally-available-variables)
