@@ -33,7 +33,6 @@ contract  YorkERC20Token is IERC20{
 
     uint256 public override totalSupply = 1000000 * (uint256(10) ** decimals);
 
-    event Transfer(address indexed from, address indexed to, uint256 value);
 
     constructor() public {
         // Initially assign all tokens to the contract's 
@@ -45,15 +44,14 @@ contract  YorkERC20Token is IERC20{
     function transfer(address to, uint256 value) public override returns (bool success) {
         require(balanceOf[msg.sender] >= value);
 
-        balanceOf[msg.sender] = balanceOf[msg.sender].sub(value);  // deduct from 
+        balanceOf[msg.sender] = balanceOf[msg.sender] - (value);  // deduct from 
 // sender's balance
-        balanceOf[to] = balanceOf[to].add(value);          // 
+        balanceOf[to] = balanceOf[to] + (value);          // 
 // add to recipient's balance
         emit Transfer(msg.sender, to, value);
         return true;
     }
 
-    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     mapping(address => mapping(address => uint256)) public override allowance;
 
@@ -73,9 +71,9 @@ contract  YorkERC20Token is IERC20{
         require(value <= balanceOf[from]);
         require(value <= allowance[from][msg.sender]);
 
-        balanceOf[from] = balanceOf[from].sub(value);
-        balanceOf[to] = balanceOf[to].add(value);
-        allowance[from][msg.sender] = allowance[from][msg.sender].sub(value);
+        balanceOf[from] = balanceOf[from] - (value);
+        balanceOf[to] = balanceOf[to] + (value);
+        allowance[from][msg.sender] = allowance[from][msg.sender] - (value);
         emit Transfer(from, to, value);
         return true;
     }
