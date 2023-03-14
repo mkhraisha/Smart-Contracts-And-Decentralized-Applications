@@ -63,7 +63,7 @@ contract StartStopUpdateExample {
     }
 
     function withdrawAllMoney(address payable _to) public {
-        require(msg.sender == owner, &quot;You cannot withdraw!&quot;);
+        require(msg.sender == owner, "You cannot withdraw!");
         _to.transfer(address(this).balance);
     }
 }
@@ -105,13 +105,13 @@ contract StartStopUpdateExample {
     }
 
     function setPaused(bool _paused) public {
-        require(msg.sender == owner, &quot;You are not the owner&quot;);
+        require(msg.sender == owner, "You are not the owner");
         paused = _paused;
     }
 
     function withdrawAllMoney(address payable _to) public {
-        require(msg.sender == owner, &quot;You cannot withdraw”);
-        require(!paused, &quot;Contract Paused currently&quot;);
+        require(msg.sender == owner, "You cannot withdraw”);
+        require(!paused, "Contract Paused currently");
         _to.transfer(address(this).balance);
     }
 }
@@ -227,7 +227,7 @@ contract ExceptionExample {
     }
 
     function withdrawMoney(address payable _to, uint _amount) public {
-        require(_amount &lt;= balanceReceived[msg.sender], &quot;not enough funds.&quot;);
+        require(_amount &lt;= balanceReceived[msg.sender], "not enough funds.");
         balanceReceived[msg.sender] -= _amount;
         _to.transfer(_amount);
     }

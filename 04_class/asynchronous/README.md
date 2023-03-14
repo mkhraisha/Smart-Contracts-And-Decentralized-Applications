@@ -47,6 +47,12 @@ contract Savings {
     address owner;
     uint256 deadline;
 
+    constructor(uint256 numberOfDays) public payable {
+        owner = msg.sender;
+        deadline = block.timestamp + (numberOfDays * 1 days);
+    }
+
+
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
@@ -56,10 +62,6 @@ contract Savings {
         require(msg.value == amount);
     }
 
-    constructor(uint256 numberOfDays) public payable {
-        owner = msg.sender;
-        deadline = block.timestamp + (numberOfDays * 1 days);
-    }
 
     function withdraw() public onlyOwner {
         require(block.timestamp >= deadline);
@@ -86,4 +88,4 @@ contract Savings {
 
 #### References
 
-- [Units and Globally Available Variables](https://docs.soliditylang.org/en/v0.6.10/units-and-global-variables.html#units-and-globally-available-variables)
+- [Units and Globally Available Variables](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#units-and-globally-available-variables)
