@@ -5,9 +5,9 @@
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity >=0.8.2 <0.9.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
+
 
 
 interface IERC20 {
@@ -24,8 +24,6 @@ interface IERC20 {
 }
 
 contract  YorkERC20Token is IERC20{
-    // use SafeMath library
-    using SafeMath for uint256;
     // Track how many tokens are owned by each address.
     mapping (address => uint256) public override balanceOf;
 
