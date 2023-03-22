@@ -228,11 +228,11 @@ This command should download a repository and install all dependencies in the cu
 
 Now you’ll add the contracts created in previous steps and remove `SimpleStorage.sol`.
 
-<img src="./assets/images/remove-simple-storage.png" width=400 />
+<img src="./images/remove-simple-storage.png" width=400 />
 
 And add the files created previously:
 
-<img src="./assets/images/add-files.png" width=200 />
+<img src="./images/add-files.png" width=200 />
 
 Now modify the migration file:
 
@@ -275,7 +275,7 @@ On the terminal run:
 $ truffle develop
 $ truffle migrate
 ```
-<img src="./assets/images/truffle-migrate.png" width=400 />
+<img src="./images/truffle-migrate.png" width=400 />
 
 ### Step 6:
 
@@ -367,7 +367,7 @@ $ npm start
 ```
 This will start the development server on port 3000 and should open a new tab in your browser:
 
-<img src="./assets/images/output.png" width=400 />
+<img src="./images/output.png" width=400 />
 
 > Do not worry about the error message that the network wasn’t found or the contract wasn’t found under the address provided. Follow along in the next step where you change the network in MetaMask! As long as there is no error in your terminal and it says “Compiled successfully” you’re good to go.
 
@@ -376,22 +376,22 @@ Connect Metamask and add Private key to MetaMask
 
 First, connect with MetaMask to the right network.
 
-<img src="./assets/images/mm-network.png" width=250 />
+<img src="./images/mm-network.png" width=250 />
 
 - When we migrate the smart contracts with Truffle Developer console, then the first account in the truffle developer console is the “owner”. 
 - So, either we disable MetaMask in the Browser to interact with the app or we add in the private key from truffle developer console to MetaMask.
 - In the Terminal/Powershell where Truffle Developer Console is running scroll to the private keys on top:
 
-<img src="./assets/images/pk-copy.png" width=400 />
+<img src="./images/pk-copy.png" width=400 />
 
 Copy the Private Key and add it into MetaMask:
 
-<img src="./assets/images/import-pk.png" width=300 />
+<img src="./images/import-pk.png" width=300 />
 
 - Then your new Account should appear here with ~100 Ether in it.
 - Now let’s add a new Item to our Smart Contract. You should be presented with the popup to send the message to an end-user.
 
-<img src="./assets/images/send-pop-up.png" width=300 />
+<img src="./images/send-pop-up.png" width=300 />
 
 ### Step 8:
 - Listen to payments
@@ -439,7 +439,7 @@ console.error(error);
 
 Whenever someone pays the item a new popup will appear telling you to deliver. You could also add this to a separate page, but for simplicity, we will just add it as an alert popup to showcase the trigger-functionality:
 
-<img src="./assets/images/pay-mm-popup.png" width=300 />
+<img src="./images/pay-mm-popup.png" width=300 />
 
 Take the address, give it to someone telling them to send `100 wei` (`0.0000000000000001 ether`) and a bit more gas to the specified address. You can do this either via MetaMask or via the `truffle console`:
 
@@ -450,7 +450,7 @@ gas: 2000000});
 
 Then a popup should appear on the website
 
-<img src="./assets/images/deliver-popup.png" width=300 />
+<img src="./images/deliver-popup.png" width=300 />
 
 ### Step 9:
 Unit test functionality
@@ -481,7 +481,7 @@ $ truffle test
 
 It should bring up a test like this:
 
-<img src="./assets/images/compile.png" width=300 />
+<img src="./images/compile.png" width=300 />
 
 Your assignment is completed. Zip the truffle project and submit to the dropbox. Do not include the `node_modules` folder in the zip else you’ll receive 0 (but you can resubmit).
 

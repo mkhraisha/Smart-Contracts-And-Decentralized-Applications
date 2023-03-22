@@ -127,7 +127,7 @@ contract DEX {
     - For simplicity, implement the logic to just exchange 1 token for 1 Ether.
     - If the buyer is successful, you will see two events (Transfer and Bought) in remix similar to sample shown below:
 
-    ![buy](./assets/images/buy.png)
+    ![buy](./images/buy.png)
 
 2. `sell`
 
@@ -137,6 +137,6 @@ contract DEX {
     - Send the Ethers back to the caller address.
     - If seller is successful, you will see two events (`Transfer` and `Sold`) in remix similar to sample shown below:
 
-    ![sell](./assets/images/sell.png)
+    ![sell](./images/sell.png)
 
 Submit your complete solution (DEX.sol) to the dropbox.
