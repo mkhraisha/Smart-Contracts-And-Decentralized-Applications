@@ -294,7 +294,12 @@ $ truffle migrate
 ```
 
 
-modify the contractbtns.jsx file to call the new functions that itemManager provides.
+modify the contractbtns.jsx file to add two functions:
+
+* CreateItem
+* TriggerPayment
+
+These functions should call the smart contract and create the item or trigger the payment.
 
 
 Open another terminal (leave the one running) and go to the client folder and run
@@ -325,11 +330,9 @@ Copy the Private Key and add it into MetaMask:
 <img src="./images/import-pk.png" width=300 />
 
 - Then your new Account should appear here with ~100 Ether in it.
-- Now let’s add a new Item to our Smart Contract. You should be presented with the popup to send the message to an end-user.
 
-<img src="./images/send-pop-up.png" width=300 />
 
-Your assignment is completed. Zip the truffle project and submit to the dropbox. Do not include the `node_modules` folder in the zip else you’ll receive 0 (but you can resubmit).
+
 
 Step 8: 
 
@@ -345,4 +348,8 @@ You could watch the address on a low-level for incoming payments. We will wait f
 use the subscribe function outlined here: https://web3js.readthedocs.io/en/v1.2.11/web3-eth-subscribe.html#web3-eth-subscribe
 
 
+Step 9:
 
+Create an Item then trigger a payment
+
+Your assignment is completed. Zip the truffle project and submit to the dropbox. Do not include the `node_modules` folder in the zip else you’ll receive 0 (but you can resubmit).
