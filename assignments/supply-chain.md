@@ -256,13 +256,15 @@ module.exports = {
   // to customize your Truffle configuration!
   contracts_build_directory: path.join(__dirname, "client/src/contracts"),
   networks: {
-    develop: {
-      port: 8545,
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 8545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
     },
-  },
+  }, 
   compilers: {
     solc: {
-      version: "0.6.10",
+      version: "0.8.18",
     },
   },
 };
@@ -279,87 +281,21 @@ $ truffle migrate
 
 ### Step 6:
 
-- Modify the HTML to add the Items to ItemManager
-- Open `client/App.js` and modify the beginning of the file:
+- Modify the React app component that includes the Demo/Contract.jsx
 
 ```js
-import React, { Component } from "react";
-import ItemManager from "./contracts/ItemManager.json";
-import Item from "./contracts/Item.json";
-import getWeb3 from "./getWeb3";
-import "./App.css";
-class App extends Component {
-    state = {cost: 0, itemName: "exampleItem1", loaded:false};
+    <code>
+      {`contract ItemManager {
+  `}
 
-    componentDidMount = async () => {
-        try {
-            // Get network provider and web3 instance.
-            this.web3 = await getWeb3();
-            // Use web3 to get the user's accounts.
-            this.accounts = await this.web3.eth.getAccounts();
-            // Get the contract instance.
-            const networkId = await this.web3.eth.net.getId();
-            this.itemManager = new this.web3.eth.Contract(
-                ItemManager.abi,
-                ItemManager.networks[networkId] && ItemManager.networks[networkId].address,
-            );
-            this.item = new this.web3.eth.Contract(
-                Item.abi,
-                Item.networks[networkId] && Item.networks[networkId].address,
-            );
-            this.setState({loaded:true});
-        } catch (error) {
-            // Catch any errors for any of the above operations.
-            alert(`Failed to load web3, accounts, or contract. Check console for details.`,);
-            console.error(error);
-        }
-    };
 
+    </code>
     //.. more code here ...
 ```
 
-Then add in a form to the HTML part on the lower end of the `App.js` file, in the `render` function:
 
-```js
-render() {
-    if (!this.state.loaded) {
-        return <div>Loading Web3, accounts, and contract...</div>;
-    }
-    return (
-        <div className="App">
-        <h1>Simply Payment/Supply Chain Example!</h1>
-        <h2>Items</h2>
-        <h2>Add Element</h2>
-        Cost: <input type="text" name="cost" value={this.state.cost} onChange={this.handleInputChange} />
-        Item Name: <input type="text" name="itemName" value={this.state.itemName} onChange={this.handleInputChange} />
-        <button type="button" onClick={this.handleSubmit}>Create new Item</button>
-        </div>
-    );
-}
-```
+modify the contractbtns.jsx file to call the new functions that itemManager provides.
 
-And add two functions, one for `handleInputChange`, so that all input variables are set correctly. And one for sending the actual transaction off to the network:
-
-```js
-handleSubmit = async () => {
-    const { cost, itemName } = this.state;
-    console.log(itemName, cost, this.itemManager);
-    let result = await this.itemManager.methods.createItem(itemName, cost).send({ 
-        from:this.accounts[0] 
-        });
-    console.log(result);
-    alert("Send "+cost+" Wei to "+result.events.SupplyChainStep.returnValues._address);
-    };
-
-    handleInputChange = (event) => {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        });
-    }
-```
 
 Open another terminal (leave the one running) and go to the client folder and run
 ```sh
@@ -393,99 +329,20 @@ Copy the Private Key and add it into MetaMask:
 
 <img src="./images/send-pop-up.png" width=300 />
 
-### Step 8:
-- Listen to payments
-
-- Now that you know how much to pay to which address you need some sort of feedback. Obviously, you don’t want to wait until the customer tells you that he paid, you want to know right on the spot if a payment happened.
-- There are multiple ways to solve this particular issue. For example, you could poll the Item smart contract. 
-- You could watch the address on a low-level for incoming payments. We will wait for the event “SupplyChainStep” to trigger with _step == 1 (Paid).
-Let’s add another function to the `App.js` file:
-
-```js
-listenToPaymentEvent = () => {
-    let self = this;
-    this.itemManager.events.SupplyChainStep().on("data", async function(evt) {
-    if(evt.returnValues._step == 1) {
-        let item = await self.itemManager.methods.items(evt.returnValues._itemIndex).call();
-        console.log(item);
-        alert("Item " + item._identifier + " was paid, deliver it now!");
-    };
-    console.log(evt);
-    });
-}
-```
-
-And call this function when we initialize the app in `componentDidMount`:
-
-```js
-//...
-this.item = new this.web3.eth.Contract(
-    ItemContract.abi,
-    ItemContract.networks[this.networkId] && ItemContract.networks[this.networkId].address,
-);
-// Set web3, accounts, and contract to the state, and then proceed with an
-// example of interacting with the contract's methods.
-this.listenToPaymentEvent();
-this.setState({ loaded:true });
-} catch (error) {
-// Catch any errors for any of the above operations.
-alert(
-`Failed to load web3, accounts, or contract. Check console for details.`,
-);
-console.error(error);
-}
-//...
-```
-
-Whenever someone pays the item a new popup will appear telling you to deliver. You could also add this to a separate page, but for simplicity, we will just add it as an alert popup to showcase the trigger-functionality:
-
-<img src="./images/pay-mm-popup.png" width=300 />
-
-Take the address, give it to someone telling them to send `100 wei` (`0.0000000000000001 ether`) and a bit more gas to the specified address. You can do this either via MetaMask or via the `truffle console`:
-
-```sh
-web3.eth.sendTransaction({to: "ITEM_ADDRESS", value: 100, from: accounts[1],
-gas: 2000000});
-```
-
-Then a popup should appear on the website
-
-<img src="./images/deliver-popup.png" width=300 />
-
-### Step 9:
-Unit test functionality
-Unit testing is important, that’s out of the question. You will implement a simple unit test. First of all, delete the tests in the `/test` folder. They are for the simplestorage smart contract which doesn’t exist anymore. Then add new tests:
-
-`itemmanager.test.js`
-
-```js
-const ItemManager = artifacts.require("./ItemManager.sol");
-contract("ItemManager", accounts => {
-    it("... should let you create new Items.", async () => {
-        const itemManagerInstance = await ItemManager.deployed();
-        const itemName = "test1";
-        const itemPrice = 500;
-        const result = await itemManagerInstance.createItem(itemName, itemPrice, { from: accounts[0] });
-        assert.equal(result.logs[0].args._itemIndex, 0, "There should be one item index in there")
-        const item = await itemManagerInstance.items(0);
-        assert.equal(item._identifier, itemName, "The item has a different identifier");
-    });
-});
-```
-
-Mind the difference: In web3js you work with `instance.methods.createItem` while in truffle-contract you work with `instance.createItem`. Also, the events are different. In web3js you work with `result.events.returnValues` and in truffle-contract you work with `result.logs.args`. Keep the truffle development console open and type in a new terminal window:
-
-```sh
-$ truffle test
-```
-
-It should bring up a test like this:
-
-<img src="./images/compile.png" width=300 />
-
 Your assignment is completed. Zip the truffle project and submit to the dropbox. Do not include the `node_modules` folder in the zip else you’ll receive 0 (but you can resubmit).
 
-### Bonus Step
-- Remove the files under the `test` directory.
-- Add a new file called `ItemManager.test.js` and write the test scripts for testing `ItemManager.sol` contract.
-- Add code coverage for solidity. (Follow this [readme](https://github.com/sc-forks/solidity-coverage#solidity-coverage) to add solidity coverage plugin to the project.)
+Step 8: 
+
+Listen to payments
+
+Now that you know how much to pay to which address you need some sort of feedback. Obviously, you don’t want to wait until the customer tells you that he paid, you want to know right on the spot if a payment happened.
+
+There are multiple ways to solve this particular issue. For example, you could poll the Item smart contract.
+
+You could watch the address on a low-level for incoming payments. We will wait for the event “SupplyChainStep” to trigger with _step == 1 (Paid). Let’s add another function to the ContractBtns component that will listen to that event.
+
+
+use the subscribe function outlined here: https://web3js.readthedocs.io/en/v1.2.11/web3-eth-subscribe.html#web3-eth-subscribe
+
+
+
