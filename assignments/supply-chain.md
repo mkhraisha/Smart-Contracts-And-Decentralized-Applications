@@ -11,7 +11,7 @@ The first thing we need is a Management Smart Contract, where we can add items.
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity ^0.8.18;
 
 contract ItemManager{
     enum SupplyChainSteps{Created, Paid, Delivered}
@@ -61,7 +61,7 @@ Add another contract called `Item.sol`
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity ^0.8.18;
 
 import "./ItemManager.sol";
 contract Item {
@@ -93,7 +93,7 @@ And change the ItemManager Smart Contract to use the Item Smart Contract instead
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity ^0.8.18;
 
 import "./Item.sol";
 
@@ -148,7 +148,7 @@ You could add the OpenZeppelin Smart Contracts with the Ownable Functionality.
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity ^0.8.18;
 
 contract Ownable {
     address public _owner;
@@ -179,7 +179,7 @@ Modify `ItemManager.sol` by adding an `Ownable` contract.
 ```js
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity ^0.8.18;
 
 import "./Ownable.sol";
 import "./Item.sol";
