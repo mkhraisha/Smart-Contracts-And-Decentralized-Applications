@@ -207,7 +207,7 @@ Installing truffle and unboxing the project
 If you do not have installed truffle globally then Run
 
 ```sh
-$ npm install -g truffle
+$ npm install -g truffle ganache
 ```
 
 Create a directory called module7_assignment go inside that directory using
@@ -236,7 +236,7 @@ And add the files created previously:
 
 Now modify the migration file:
 
-`Migrations.sol`
+`1_Migrations.js`
 
 ```js
 const ItemManager = artifacts.require("./ItemManager.sol");
@@ -254,7 +254,7 @@ const path = require("path");
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
-  contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  contracts_build_directory: path.join(__dirname, "../client/src/contracts"),
   networks: {
     development: {
      host: "127.0.0.1",     // Localhost (default: none)
@@ -270,11 +270,10 @@ module.exports = {
 };
 ```
 
-Run the truffle develop console to check if everything is alright and can be migrated:
 On the terminal run:
 
 ```sh
-$ truffle develop
+$ ganache
 $ truffle migrate
 ```
 <img src="./images/truffle-migrate.png" width=400 />
@@ -293,6 +292,10 @@ $ truffle migrate
     //.. more code here ...
 ```
 
+Update the contexts\ethContext\EthProvider.jsx and change line 33 from importing the simpleStorage.json to importing the truffle/client/src/contracts itemManager.json
+
+```js
+
 
 modify the contractbtns.jsx file to add two functions:
 
@@ -300,6 +303,7 @@ modify the contractbtns.jsx file to add two functions:
 * TriggerPayment
 
 These functions should call the smart contract and create the item or trigger the payment.
+
 
 
 Open another terminal (leave the one running) and go to the client folder and run
@@ -319,7 +323,7 @@ First, connect with MetaMask to the right network.
 
 <img src="./images/mm-network.png" width=250 />
 
-- When we migrate the smart contracts with Truffle Developer console, then the first account in the truffle developer console is the “owner”. 
+- When we migrate the smart contracts with Truffle Developer console, then the first account in the truffle developer console is the “owner”.
 - So, either we disable MetaMask in the Browser to interact with the app or we add in the private key from truffle developer console to MetaMask.
 - In the Terminal/Powershell where Truffle Developer Console is running scroll to the private keys on top:
 
