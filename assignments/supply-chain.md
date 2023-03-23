@@ -274,7 +274,7 @@ On the terminal run:
 
 ```sh
 $ ganache
-$ truffle migrate
+$ truffle migrate --network development
 ```
 <img src="./images/truffle-migrate.png" width=400 />
 
