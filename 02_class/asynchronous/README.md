@@ -2,7 +2,7 @@
 
 - In this activity, you’ll examine how to develop a smart contract with Solidity by using the [Remix IDE](https://remix.ethereum.org/), one of the tools dedicated to implementing contracts to the Ethereum network.
 
-- You’ll develope a smart contract for basic banking operations.
+- You’ll develop a smart contract for basic banking operations.
 
 - You’ll learn sending ETH between any account and the contract developed (from an account to a contract or from a contract to an account) and how to restrict the people who can use the relevant function of the smart contract.
 
