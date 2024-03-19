@@ -349,7 +349,7 @@ There are multiple ways to solve this particular issue. For example, you could p
 You could watch the address on a low-level for incoming payments. We will wait for the event “SupplyChainStep” to trigger with _step == 1 (Paid). Let’s add another function to the ContractBtns component that will listen to that event.
 
 
-use the subscribe function outlined here: https://web3js.readthedocs.io/en/v1.2.11/web3-eth-subscribe.html#web3-eth-subscribe
+use the subscribe function outlined here: [https://web3js.readthedocs.io/en/v1.2.11/web3-eth-subscribe.html#web3-eth-subscribe](https://docs.web3js.org/guides/events_subscriptions/)
 
 
 Step 9:
