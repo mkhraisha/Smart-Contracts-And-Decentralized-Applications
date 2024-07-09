@@ -1,6 +1,6 @@
 # Coding Activity
 
-Develop a contract that handles time. Use Remix IDE to test the contract as learnt in [this](../../class-2/asynchronous/README.md) activity.
+Develop a contract that handles time. Use Remix IDE to test the contract.
 
 ## Background
 
